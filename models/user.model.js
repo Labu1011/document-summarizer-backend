@@ -21,6 +21,11 @@ const userSchema = new mongoose.Schema({
         minLength: [6, "Password should be at least of length 6."],
         required: [true, "Password is required."],
     },
+    googleId: {
+        type: String,
+        unique: [true, "Google id must be unique."],
+        sparse: true
+    }
 }, {
     timestamps: true
 })
