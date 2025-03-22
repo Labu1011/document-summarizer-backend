@@ -2,7 +2,7 @@ import express from "express";
 import cors from "cors";
 import session from "express-session";
 import { config } from "dotenv";
-import passport from "./config/passport.js";
+import passport from "./lib/passport.js";
 import connectDB from "./lib/db.js";
 import authRoute from "./routes/auth.route.js";
 import uploadRoute from "./routes/upload.route.js";
