@@ -26,3 +26,20 @@ export async function uploadFile(req, res) {
     return res.status(500).json({ message: "Internal Server Error." });
   }
 }
+
+export async function getMyUploads(req, res) {
+  try {
+    const userId = req.user.id;
+    const userPdfs = await FileModel.find({ user: userId }).populate(
+      "user",
+      "name email",
+    );
+
+    res
+      .status(200)
+      .json({ message: "User PDFs fetched successfully", data: userPdfs });
+  } catch (error) {
+    console.log("Error in getMyUploads controller: ", error.message);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+}
