@@ -5,6 +5,7 @@ import { config } from "dotenv";
 import passport from "../config/passport.js";
 import connectDB from "../lib/db.js";
 import authRoute from "../routes/auth.route.js";
+import uploadRoute from "../routes/upload.route.js";
 
 config();
 
@@ -31,6 +32,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/auth", authRoute);
+app.use("/api/v1/file", uploadRoute);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, async () => {
