@@ -38,18 +38,17 @@ export async function login(req, res, next) {
     if (err) return next(err);
     if (!user) return res.status(400).json({ message: info.message });
 
-    // Generate JWT Token
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
+    req.login(user, (err) => {
+      if (err) next(err);
+      res.status(200).json({ message: "Logged in successfully.", user });
     });
-    res.status(200).json({ message: "Logged in successfully.", token, user });
   })(req, res, next);
 }
 
 export async function logout(req, res) {
   req.logout((err) => {
     if (err) return res.status(500).json({ error: "Logout failed" });
-
+    req.session.destroy();
     res.json({ message: "Logged out successfully" });
   });
 }

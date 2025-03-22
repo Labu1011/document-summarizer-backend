@@ -1,9 +1,11 @@
 import express from "express";
 import upload from "../lib/multerConfig.js";
 import { uploadFile } from "../controllers/upload.controller.js";
+import { isAuthenticated } from "../middlewares/auth.middleware.js";
 
 const router = express.Router();
 
-router.post("/upload", upload.single("pdf"), uploadFile);
+router.post("/upload", isAuthenticated, upload.single("pdf"), uploadFile);
+router.get("/my-uploads", isAuthenticated);
 
 export default router;

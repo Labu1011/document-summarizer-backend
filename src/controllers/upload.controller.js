@@ -5,12 +5,15 @@ export async function uploadFile(req, res) {
     if (!req.file)
       return res.status(400).json({ message: "No file uploaded." });
 
+    const userId = req.user.id;
+
     // Save metadata to mongoDB
     const pdfData = new FileModel({
       filename: req.file.originalname,
       url: req.file.path,
       size: req.file.size,
       uploadedAt: new Date(),
+      user: userId,
     });
 
     await pdfData.save();

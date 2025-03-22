@@ -2,10 +2,10 @@ import express from "express";
 import cors from "cors";
 import session from "express-session";
 import { config } from "dotenv";
-import passport from "../config/passport.js";
-import connectDB from "../lib/db.js";
-import authRoute from "../routes/auth.route.js";
-import uploadRoute from "../routes/upload.route.js";
+import passport from "./config/passport.js";
+import connectDB from "./lib/db.js";
+import authRoute from "./routes/auth.route.js";
+import uploadRoute from "./routes/upload.route.js";
 
 config();
 
@@ -20,6 +20,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    cookie: { secure: process.env.NODE_ENV !== "development" },
   }),
 );
 
@@ -28,7 +29,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get("/", (req, res) => {
-  res.send("Welcome to the AI based document summarizer API.");
+  res.send("<a href='/api/v1/auth/google'>Authenticate using Google</a>");
 });
 
 app.use("/api/v1/auth", authRoute);
